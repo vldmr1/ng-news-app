@@ -1,0 +1,25 @@
+.app-header {
+  padding: 2rem;
+
+  .app-nav {
+    display: flex;
+    justify-content: space-between;
+    max-width: 20rem;
+    margin-left: auto;
+
+    .nav-link {
+      font-size: 3rem;
+      color: #333333;
+
+      &:hover {
+        color: #555555;
+      }
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+
