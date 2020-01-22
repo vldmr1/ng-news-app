@@ -1,0 +1,31 @@
+<div class="filter-wrapper">
+  <div class="source-dropdown" [ngClass]="{disabled: onlyMyNews}">
+    <button class="dropbtn btn grey darken-2" [ngClass]="{disabled: onlyMyNews}">{{ currentSource ? currentSource : "Select source" }}</button>
+    <div class="dr-content">
+      <a
+        *ngFor="let source of sources"
+        (click)="onChangeCurrentSource($event)"
+        class="dr-item"
+        [attr.data-sourceId]="source.id">
+          {{source.name}}</a>
+    </div>
+  </div>
+  <div class="input-field col s6">
+    <input placeholder="Filter by title..."
+      id="first_name"
+      type="text"
+      class="validate"
+      (keydown)="onChangeCurrentSearchQuery($event)"
+      [value]="currentSearchQuery">
+  </div>
+  <div class="my-articles-toggle">
+    <label>
+      <input
+        type="checkbox"
+        [checked]="onlyMyNews"
+        (change)="onChangeOnlyMyNews($event)" />
+      <span>Only created by me</span>
+    </label>
+  </div>
+  <button class="btn grey darken-2" routerLink="/edit">Add article</button>
+</div>

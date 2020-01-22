@@ -1,0 +1,15 @@
+<div>
+  <app-news-filter
+    [(currentSource)]="currentSourceId"
+    [(currentSearchQuery)]="currentSearchQuery"
+    [(onlyMyNews)]="onlyMyNews"
+    [sources]="sources"
+    >
+  </app-news-filter
+  >
+  <app-news-list
+    [articles]="articles"
+    (loadMore)="onLoadMoreClicked()">
+  </app-news-list
+  >
+</div>

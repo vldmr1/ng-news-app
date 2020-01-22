@@ -1,0 +1,18 @@
+<li class="card">
+  <div class="card-image">
+    <img src="{{!!article.urlToImage ? article.urlToImage : 'http://icon-library.com/images/placeholder-image-icon/placeholder-image-icon-21.jpg'}}">
+    <span class="card-title"></span>
+  </div>
+  <div class="card-content">
+    <p>{{article.title}}</p>
+  </div>
+  <div class="card-action">
+    <a (click)="navigateToArticle()" class="grey-text text-darken-2 article-link">Learn more</a>
+    <div class="article-control" *ngIf="article.isLocal">
+      <a><i class="small material-icons icn">edit</i></a>
+      <a><i class="small material-icons icn">delete</i></a>
+    </div>
+  </div>
+</li>
+
+<!-- href="{{article.url}}" -->
