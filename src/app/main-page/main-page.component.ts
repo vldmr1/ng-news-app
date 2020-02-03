@@ -1,6 +1,8 @@
 import { Component, OnInit, KeyValueDiffer, KeyValueDiffers, DoCheck } from '@angular/core';
-import { ARTICLES } from '../../assets/mock-data/articles';
-import { SOURCES } from '../../assets/mock-data/sources';
+import { DataService, NewsSourceInterface } from '../services/data.service';
+
+import {map, tap, scan, switchMap, mergeMap} from 'rxjs/operators';
+import { Observable, merge, concat } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -10,19 +12,26 @@ import { SOURCES } from '../../assets/mock-data/sources';
 
 export class MainPageComponent implements OnInit, DoCheck {
   currentSourceId: string = '';
-  currentSearchQuery: string = '';
+  public currentSearchQuery: string = '';
   onlyMyNews: boolean = false;
-  pageIndex: number = 1;
-  sources: Object[] = SOURCES;
-  articles: Object[];
+  public pageSize: number = 9;
+  public currentPageNumber: number = 1;
+  public articles$: Observable<any>;
+  public sources$: Observable<NewsSourceInterface[]>;
   differ: KeyValueDiffer<string, any>;
 
-  constructor(private differs: KeyValueDiffers) {
+  constructor(
+    private differs: KeyValueDiffers,
+    public dataService: DataService,
+  ) {
     this.differ = this.differs.find({}).create();
   }
 
   ngOnInit() {
-    this.filterArticles(this.currentSourceId, this.currentSearchQuery);
+    this.sources$ = this.dataService.fetchNewsSources()
+      .pipe(
+        map(({sources}) => sources),
+      );
   }
 
   ngDoCheck() {
@@ -31,22 +40,22 @@ export class MainPageComponent implements OnInit, DoCheck {
       change.forEachChangedItem(({key}) => {
         switch (key) {
           case 'currentSourceId':
-            this.pageIndex = 1;
             this.currentSearchQuery = '';
-            this.filterArticles(this.currentSourceId, this.currentSearchQuery);
+            this.currentPageNumber = 1;
+            this.articles$ = this.fetchArticles();
             break;
           case 'currentSearchQuery':
-            this.pageIndex = 1;
-            this.filterArticles(this.currentSourceId, this.currentSearchQuery);
+            this.currentPageNumber = 1;
+            this.articles$ = this.fetchArticles();
             break;
-          case 'pageIndex':
-            this.filterArticles(this.currentSourceId, this.currentSearchQuery);
+          case 'currentPageNumber':
+            this.articles$ = this.fetchArticles();
             break;
           case 'onlyMyNews':
-            this.pageIndex = 1;
+            this.currentPageNumber = 1;
             this.currentSourceId = '';
             this.currentSearchQuery = '';
-            this.filterArticles(this.currentSourceId, this.currentSearchQuery);
+
             break;
           default:
             break;
@@ -55,22 +64,27 @@ export class MainPageComponent implements OnInit, DoCheck {
     }
   }
 
-  filterArticles(currentSource, currentSearch) {
-    this.articles = ARTICLES.reduce((result, {source, articles, isLocal}) => {
-      if (!isLocal && this.onlyMyNews !== Boolean(isLocal)) return result;
+  fetchArticles() {
+    const {currentSourceId, currentSearchQuery, currentPageNumber} = this;
+    return this.dataService.fetchArticles(currentSourceId, currentSearchQuery, currentPageNumber)
+      .pipe(
+        map(({articles}) => articles)
+      );
+  }
 
-      const articlesBySearch = articles.filter(({title}) =>
-        title && title.toLowerCase().includes(currentSearch.toLowerCase()));
-
-      if (currentSource === '') {
-        return [...result, ...articlesBySearch];
-      }
-
-      return source === currentSource ? [...result, ...articlesBySearch] : result;
-    }, []).slice(0, this.pageIndex * 3);
+  fetchLocalNews() {
+    
   }
 
   onLoadMoreClicked() {
-    this.pageIndex += 1;
+    this.currentPageNumber++;
+    // this.articles$ = this.articles$.pipe(
+    //   switchMap(() => {
+    //     console.log('switchMap');
+    //     return this.fetchArticles()}),
+    //   scan((acc, curr) => {
+    //     console.log('scan');
+    //     return [...acc, curr]}, [])
+    // )
   }
 }

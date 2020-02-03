@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-news-item',
@@ -9,14 +11,27 @@ import { Router } from '@angular/router';
 })
 export class NewsItemComponent implements OnInit {
   @Input() article: any;
+  @Input() articleIndex: number;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private dataService: DataService,
+  ) { }
 
   ngOnInit() {
 
   }
 
+  handleArticleSelection() {
+    this.navigateToArticle();
+    this.dataService.setCurrentArticle(this.articleIndex);
+  }
+
   navigateToArticle() {
-    this.router.navigate([`/article/${this.article.publishedAt}`, { article : JSON.stringify(this.article) }])
+    this.router.navigate([`/article/${this.articleIndex}`]);
+  }
+
+  setCurrentArticle() {
+    this.dataService.setCurrentArticle(this.article);
   }
 }

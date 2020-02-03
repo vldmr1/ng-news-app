@@ -3,13 +3,15 @@
     [(currentSource)]="currentSourceId"
     [(currentSearchQuery)]="currentSearchQuery"
     [(onlyMyNews)]="onlyMyNews"
-    [sources]="sources"
+    [sources]="sources$ | async"
     >
   </app-news-filter
   >
   <app-news-list
-    [articles]="articles"
+    [articles]="articles$ | async"
     (loadMore)="onLoadMoreClicked()">
   </app-news-list
   >
 </div>
+
+<!-- [articles]="dataService.filteredArticles" -->

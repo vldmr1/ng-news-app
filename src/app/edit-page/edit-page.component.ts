@@ -5,7 +5,9 @@ import {
   Input,
   ChangeDetectorRef
 } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import { Observable, Subscription } from 'rxjs';
+import { ArticleInterface, DataService, ArticlesResponseInterface } from '../services/data.service';
 
 @Component({
   selector: 'app-edit-page',
@@ -14,27 +16,36 @@ import { FormBuilder, Validators } from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditPageComponent implements OnInit {
+  public article: ArticleInterface;
+  public currentArticleSubscription: Subscription;
 
-  public articleForm = this.fb.group({
-    heading: ["", Validators.required],
-    shortDescription: [""],
-    content: ["", Validators.required],
-    photo: this.fb.group({
-      radioType: ["url"],
-      inputUrl: [""],
-      inputImg: [""]
-    }),
-    date: [""],
-    author: [""],
-    sourceUrl: [""]
-  });
+  public articleForm: FormGroup;
 
   constructor(
+    private dataService: DataService,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
+    this.currentArticleSubscription = this.dataService.currentArticle$.subscribe(
+      (response: ArticleInterface) => this.article = response);
+
+      const {title, author, description, content, publishedAt, url, urlToImage} = this.article;
+
+    this.articleForm = this.fb.group({
+      heading: [title, Validators.required],
+      shortDescription: [description],
+      content: [content, Validators.required],
+      photo: this.fb.group({
+        radioType: ["url"],
+        inputUrl: [urlToImage],
+        inputImg: [""]
+      }),
+      date: [publishedAt],
+      author: [author],
+      sourceUrl: [url]
+    });
   }
 
   submitForm() {

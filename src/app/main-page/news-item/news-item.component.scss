@@ -16,6 +16,10 @@
 
     .article-link {
       vertical-align: middle;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .article-control {

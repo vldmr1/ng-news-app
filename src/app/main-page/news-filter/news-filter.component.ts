@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-news-filter',
@@ -16,14 +17,17 @@ export class NewsFilterComponent implements OnInit {
   @Output() onlyMyNewsChange: EventEmitter<string> = new EventEmitter();
 
 
-  constructor() { }
+  constructor(
+    public dataService: DataService,
+  ) { }
 
   ngOnInit() {
   }
 
   onChangeCurrentSource({target}) {
-    const sourceid = target.getAttribute('data-sourceId');
-    this.currentSourceChange.emit(sourceid);
+    // this.dataService.changeCurrentSource(target.innerText);
+    const sourceId = target.getAttribute('data-sourceId');
+    this.currentSourceChange.emit(sourceId);
   }
 
   onChangeCurrentSearchQuery({key, target: {value}}) {

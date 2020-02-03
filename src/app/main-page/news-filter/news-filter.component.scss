@@ -21,6 +21,8 @@
 
     &:hover .dr-content {
       display: block;
+      max-height: 80vh;
+      overflow: hidden;
     }
 
     .dr-content {

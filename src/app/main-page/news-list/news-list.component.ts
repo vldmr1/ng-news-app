@@ -7,7 +7,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewsListComponent implements OnInit {
-  @Input() articles: Object[];
+  @Input() articles: any;
   @Output() loadMore: EventEmitter<{}> = new EventEmitter();
 
   constructor() { }
@@ -16,6 +16,7 @@ export class NewsListComponent implements OnInit {
   }
 
   onLoadMoreClick() {
+    console.log(this.articles);
     this.loadMore.emit({});
   }
 

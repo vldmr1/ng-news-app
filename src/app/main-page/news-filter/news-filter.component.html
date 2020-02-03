@@ -11,11 +11,13 @@
     </div>
   </div>
   <div class="input-field col s6">
-    <input placeholder="Filter by title..."
+    <input
+      placeholder="Filter by title..."
       id="first_name"
       type="text"
       class="validate"
       (keydown)="onChangeCurrentSearchQuery($event)"
+      [ngClass]="{disabled: onlyMyNews}"
       [value]="currentSearchQuery">
   </div>
   <div class="my-articles-toggle">
