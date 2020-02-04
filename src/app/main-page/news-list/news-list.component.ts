@@ -20,4 +20,8 @@ export class NewsListComponent implements OnInit {
     this.loadMore.emit({});
   }
 
+  trackByIndex(index: number): number {
+    return index;
+  };
+
 }

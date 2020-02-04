@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  API_KEY: '1fe18006bed24619bd86799646a3d570'
+  API_KEY: '1fe18006bed24619bd86799646a3d570',
+  email: 'vova-super@vova.com',
+  password: 'verysecurepassword123',
 };
 
 /*

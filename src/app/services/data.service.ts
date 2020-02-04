@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {map, tap, first} from 'rxjs/operators';
 
 
 import { Injectable } from '@angular/core';
@@ -81,7 +81,28 @@ export class DataService {
     return this.http.get<ArticlesResponseInterface>(`https://newsapi.org/v2/everything?apiKey=${environment.API_KEY}&sources=${sourceId}&q=${query}&pageSize=9&page=${currentPageNumber}`);
   }
 
-  // public fetchLocalNews(): Observable<ArticlesResponseInterface> {
+  public fetchLocalNews(): Observable<ArticleInterface> {
+    return this.http.post<ArticleInterface>(`http://localhost:3000/api/users/login`, {email: environment.email, password: environment.password})
+      .pipe(
+        tap(resp => console.log(resp))
+      );
+  }
 
-  // }
+  public deleteLocalArticle(articleId: string): Observable<any> {
+    return this.http.delete<any>(`http://localhost:3000/api/articles/${articleId}`)
+    .pipe(
+      tap(({message}) => console.log(message))
+    );
+  }
+
+  public addLocalArticle(article: ArticleInterface): any {
+    // this.http.post<ArticleInterface>(`http://localhost:3000/api/users/login`, {email: environment.email, password: environment.password})
+    //   .pipe(
+    //     first()
+    //   ).subscribe();
+    this.http.post('http://localhost:3000/api/articles/', article)
+      .pipe(
+        first()
+      ).subscribe();
+  }
 }

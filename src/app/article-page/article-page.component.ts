@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../services/data.service';
+import { DataService, ArticleInterface } from '../services/data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-article-page',
@@ -9,7 +10,8 @@ import { DataService } from '../services/data.service';
 })
 export class ArticlePageComponent implements OnInit {
   public id: string;
-  public article = this.dataService.currentArticle;
+  public article: ArticleInterface;
+  public currentArticleSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -17,6 +19,10 @@ export class ArticlePageComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.currentArticleSubscription = this.dataService.currentArticle$.subscribe(
+      (response: ArticleInterface) => {
+        this.article = response
+    });
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
   }
 }

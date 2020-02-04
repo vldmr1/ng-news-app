@@ -1,8 +1,8 @@
 <div class="news-wrapper">
   <ul class="articles-list">
     <app-news-item
-     *ngFor="let article of articles; let i = index"
-     [articleIndex]="i"
+     *ngFor="let article of articles; let index = index; trackBy:trackByIndex"
+     [articleIndex]="index"
      [article]=article></app-news-item>
   </ul>
   <div class="load-controller">

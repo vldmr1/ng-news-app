@@ -1,8 +1,8 @@
 import { Component, OnInit, KeyValueDiffer, KeyValueDiffers, DoCheck } from '@angular/core';
-import { DataService, NewsSourceInterface } from '../services/data.service';
+import { DataService, NewsSourceInterface, ArticleInterface } from '../services/data.service';
 
 import {map, tap, scan, switchMap, mergeMap} from 'rxjs/operators';
-import { Observable, merge, concat } from 'rxjs';
+import { Observable, merge, concat, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -49,13 +49,16 @@ export class MainPageComponent implements OnInit, DoCheck {
             this.articles$ = this.fetchArticles();
             break;
           case 'currentPageNumber':
-            this.articles$ = this.fetchArticles();
+            this.articles$ = forkJoin(this.fetchArticles(), this.articles$)
+              .pipe(
+                map(res => [...res[0], ...res[1]])
+              );
             break;
           case 'onlyMyNews':
             this.currentPageNumber = 1;
             this.currentSourceId = '';
             this.currentSearchQuery = '';
-
+            this.articles$ = this.fetchLocalNews();
             break;
           default:
             break;
@@ -73,7 +76,7 @@ export class MainPageComponent implements OnInit, DoCheck {
   }
 
   fetchLocalNews() {
-    
+    return this.dataService.fetchLocalNews();
   }
 
   onLoadMoreClicked() {

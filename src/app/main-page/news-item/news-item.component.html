@@ -8,12 +8,12 @@
   </div>
   <div class="card-action">
     <a
-      (click)="handleArticleSelection()"
+      (click)="handleArticleSelection(article)"
       class="grey-text text-darken-2 article-link"
       >Learn more</a>
-    <div class="article-control" *ngIf="article.isLocal">
-      <a><i class="small material-icons icn">edit</i></a>
-      <a><i class="small material-icons icn">delete</i></a>
+    <div class="article-control" *ngIf="article.source.id === 'local-news'">
+      <a><i class="small material-icons icn" (click)="onSetCurrentArticle(article)">edit</i></a>
+      <a><i class="small material-icons icn" (click)="onDeleteArticle(article._id)">delete</i></a>
     </div>
   </div>
 </li>
