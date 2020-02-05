@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataService, ArticleInterface } from '../services/data.service';
+import { DataService } from '../services/data.service';
 import { Subscription } from 'rxjs';
+import { ArticleInterface } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-article-page',
   templateUrl: './article-page.component.html',
   styleUrls: ['./article-page.component.scss']
 })
+
 export class ArticlePageComponent implements OnInit {
   public id: string;
   public article: ArticleInterface;

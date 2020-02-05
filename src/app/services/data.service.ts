@@ -8,42 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { ARTICLES } from '../../assets/mock-data/articles';
 import { SOURCES } from '../../assets/mock-data/sources';
 import { environment } from '../../environments/environment';
+import { SourcesResponseInterface, ArticleInterface, ArticlesResponseInterface } from '../interfaces/interfaces';
 
-export interface NewsSourceInterface {
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  category: string;
-  language: string;
-  country: string;
-}
-
-export interface SourcesResponseInterface {
-  status: string;
-  sources: NewsSourceInterface[];
-}
-
-export interface ArticleInterface {
-  source?: {
-    id: string;
-    name: string;
-  };
-  author?: string;
-  title?: string;
-  description?: string;
-  url?: string;
-  urlToImage?: string;
-  publishedAt?: Date;
-  content?: string;
-}
-
-export interface ArticlesResponseInterface {
-  status: string;
-  source: string;
-  sortBy: string;
-  articles: ArticleInterface[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -81,8 +47,8 @@ export class DataService {
     return this.http.get<ArticlesResponseInterface>(`https://newsapi.org/v2/everything?apiKey=${environment.API_KEY}&sources=${sourceId}&q=${query}&pageSize=9&page=${currentPageNumber}`);
   }
 
-  public fetchLocalNews(): Observable<ArticleInterface> {
-    return this.http.post<ArticleInterface>(`http://localhost:3000/api/users/login`, {email: environment.email, password: environment.password})
+  public fetchLocalNews(): Observable<ArticleInterface[]> {
+    return this.http.post<ArticleInterface[]>(`http://localhost:3000/api/users/login`, {email: environment.email, password: environment.password})
       .pipe(
         tap(resp => console.log(resp))
       );
@@ -95,12 +61,15 @@ export class DataService {
     );
   }
 
-  public addLocalArticle(article: ArticleInterface): any {
-    // this.http.post<ArticleInterface>(`http://localhost:3000/api/users/login`, {email: environment.email, password: environment.password})
-    //   .pipe(
-    //     first()
-    //   ).subscribe();
+  public addLocalArticle(article: ArticleInterface): void {
     this.http.post('http://localhost:3000/api/articles/', article)
+      .pipe(
+        first()
+      ).subscribe();
+  }
+
+  public updateLocalArticle(id: string, article: ArticleInterface): void {
+    this.http.patch(`http://localhost:3000/api/articles/${id}`, article)
       .pipe(
         first()
       ).subscribe();

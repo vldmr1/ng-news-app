@@ -8,9 +8,10 @@ import {
 } from "@angular/core";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { Observable, Subscription } from 'rxjs';
-import { ArticleInterface, DataService, ArticlesResponseInterface } from '../services/data.service';
+import { DataService  } from '../services/data.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { ArticleInterface } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-edit-page',
@@ -40,7 +41,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
     const {title, author, description, content, publishedAt, url, urlToImage} = this.article;
 
     this.articleForm = this.fb.group({
-      heading: [title, Validators.required],
+      title: [title, Validators.required],
       description: [description],
       content: [content, Validators.required],
       // photo: this.fb.group({
@@ -50,7 +51,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
       // }),
       date: [publishedAt],
       author: [author],
-      sourceUrl: [url]
+      url: [url]
     });
   }
 
@@ -64,13 +65,10 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   submitForm() {
     if (Object.keys(this.article).length > 0) {
-      console.log('update article!')
+      this.dataService.updateLocalArticle(this.article._id, this.articleForm.value);
     } else {
       console.log(this.articleForm.value);
-      this.dataService.addLocalArticle(this.articleForm.value);
-      // .pipe(
-      //   tap(response => console.log(response))
-      // );
+      this.dataService.addLocalArticle({ source: { id: 'local-news', name: 'Local News' }, ...this.articleForm.value});
     }
   }
 }

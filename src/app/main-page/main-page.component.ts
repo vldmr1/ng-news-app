@@ -1,8 +1,9 @@
 import { Component, OnInit, KeyValueDiffer, KeyValueDiffers, DoCheck } from '@angular/core';
-import { DataService, NewsSourceInterface, ArticleInterface } from '../services/data.service';
+import { DataService } from '../services/data.service';
 
 import {map, tap, scan, switchMap, mergeMap} from 'rxjs/operators';
 import { Observable, merge, concat, forkJoin } from 'rxjs';
+import { NewsSourceInterface, ArticleInterface } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-main-page',
@@ -19,6 +20,7 @@ export class MainPageComponent implements OnInit, DoCheck {
   public articles$: Observable<any>;
   public sources$: Observable<NewsSourceInterface[]>;
   differ: KeyValueDiffer<string, any>;
+  public articles: any = [];
 
   constructor(
     private differs: KeyValueDiffers,
@@ -42,23 +44,21 @@ export class MainPageComponent implements OnInit, DoCheck {
           case 'currentSourceId':
             this.currentSearchQuery = '';
             this.currentPageNumber = 1;
-            this.articles$ = this.fetchArticles();
+            this.fetchArticles();
             break;
           case 'currentSearchQuery':
+            this.articles = [];
             this.currentPageNumber = 1;
-            this.articles$ = this.fetchArticles();
+            this.fetchArticles();
             break;
           case 'currentPageNumber':
-            this.articles$ = forkJoin(this.fetchArticles(), this.articles$)
-              .pipe(
-                map(res => [...res[0], ...res[1]])
-              );
+            this.fetchArticles();
             break;
           case 'onlyMyNews':
             this.currentPageNumber = 1;
             this.currentSourceId = '';
             this.currentSearchQuery = '';
-            this.articles$ = this.fetchLocalNews();
+            this.fetchLocalNews();
             break;
           default:
             break;
@@ -70,24 +70,19 @@ export class MainPageComponent implements OnInit, DoCheck {
   fetchArticles() {
     const {currentSourceId, currentSearchQuery, currentPageNumber} = this;
     return this.dataService.fetchArticles(currentSourceId, currentSearchQuery, currentPageNumber)
-      .pipe(
-        map(({articles}) => articles)
-      );
+      .subscribe(({articles}) => {
+        this.articles = [...this.articles, ...articles];
+      });
   }
 
   fetchLocalNews() {
-    return this.dataService.fetchLocalNews();
+    return this.dataService.fetchLocalNews()
+      .subscribe(articles => {
+        this.articles = [...this.articles, ...articles];
+      });;
   }
 
   onLoadMoreClicked() {
     this.currentPageNumber++;
-    // this.articles$ = this.articles$.pipe(
-    //   switchMap(() => {
-    //     console.log('switchMap');
-    //     return this.fetchArticles()}),
-    //   scan((acc, curr) => {
-    //     console.log('scan');
-    //     return [...acc, curr]}, [])
-    // )
   }
 }

@@ -8,10 +8,8 @@
   </app-news-filter
   >
   <app-news-list
-    [articles]="articles$ | async"
+    [articles]="articles"
     (loadMore)="onLoadMoreClicked()">
   </app-news-list
   >
 </div>
-
-<!-- [articles]="dataService.filteredArticles" -->
