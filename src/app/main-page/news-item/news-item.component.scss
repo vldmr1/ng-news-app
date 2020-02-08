@@ -1,0 +1,45 @@
+.card {
+
+  .card-image {
+    height: 19rem;
+    overflow: hidden;
+  }
+
+  .card-content {
+    height: 8.5rem;
+  }
+
+  .card-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .article-link {
+      vertical-align: middle;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .article-control {
+      display: flex;
+      width: 5rem;
+      justify-content: space-between;
+      margin-right: -0.3rem;
+
+      a {
+        margin-right: 0;
+        line-height: 1rem;
+
+        .icn {
+          cursor: pointer;
+        }
+      }
+
+    }
+
+  }
+
+
+}

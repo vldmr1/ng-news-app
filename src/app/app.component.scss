@@ -4,37 +4,25 @@
   height: 100vh;
   margin: 0 auto;
   display: grid;
-  grid-template-areas: "header header"
-                       "sidebar main"
-                       "footer footer";
-  grid-template-columns: minmax(15rem, 25rem) 1fr;
-  grid-template-rows: 7rem 1fr 7rem;
+  grid-template-areas: "header"
+                       "main"
+                       "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: 10rem 1fr 7rem;
 
   .app-header {
     grid-area: header;
     background-color: lightgreen;
   }
 
-  .app-footer {
-    grid-area: footer;
-    background-color: lightsalmon;
-
-  }
-
   .app-main {
     grid-area: main;
     background-color: lightskyblue;
-
   }
 
-  .app-sidebar {
-    grid-area: sidebar;
-    background-color: lightgrey;
-
-  }
-
-  .btn {
-    background-color: grey;
+  .app-footer {
+    grid-area: footer;
+    background-color: lightsalmon;
   }
 }
 

@@ -1,23 +1,25 @@
-.app-header {
-  padding: 2rem;
+.header-wrapper {
+  padding: 1rem 2rem;
 
   .app-nav {
     display: flex;
-    justify-content: space-between;
-    max-width: 20rem;
+    justify-content: flex-end;
+    height: 4rem;
     margin-left: auto;
+    padding: 0 0.5rem;
 
-    .nav-link {
-      font-size: 3rem;
-      color: #333333;
+    .login-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 18rem;
+    }
+  }
 
-      &:hover {
-        color: #555555;
-      }
+  .title-wrapper {
+    text-align: center;
 
-      &.active {
-        font-weight: bold;
-      }
+    .title {
+      display: inline-block;
     }
   }
 }

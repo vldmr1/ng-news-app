@@ -1,6 +1,7 @@
 <div class="app-wrapper">
-  <app-header class="app-header"></app-header>
-  <app-sidebar class="app-sidebar"></app-sidebar>
-  <app-main class="app-main"></app-main>
-  <app-footer class="app-footer"></app-footer>
+  <app-header class="app-header grey"></app-header>
+  <div class="app-main grey lighten-3">
+    <router-outlet></router-outlet>
+  </div>
+  <div [innerHTML]="footer" class="app-footer grey"></div>
 </div>

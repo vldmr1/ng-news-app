@@ -1,15 +1,11 @@
-<div class="app-header">
-  <nav class="app-nav">
-    <a
-      class="nav-link"
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{exact: true}">
-      Home</a>
-    <a
-      class="nav-link"
-      routerLink="/about"
-      routerLinkActive="active">
-      About</a>
+<div class="header-wrapper">
+  <nav class="app-nav transparent z-depth-0">
+    <div class="login-wrapper">
+      <button class="btn btn-small red lighten-2">Log In</button>
+      <button class="btn btn-small red lighten-2">Log Out</button>
+    </div>
   </nav>
+  <div class="title-wrapper">
+    <h2 class="title">{{ currentSource$ | async}}</h2>
+  </div>
 </div>
