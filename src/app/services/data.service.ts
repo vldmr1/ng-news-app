@@ -5,8 +5,6 @@ import {map, tap, first} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ARTICLES } from '../../assets/mock-data/articles';
-import { SOURCES } from '../../assets/mock-data/sources';
 import { environment } from '../../environments/environment';
 import { SourcesResponseInterface, ArticleInterface, ArticlesResponseInterface } from '../interfaces/interfaces';
 
@@ -18,8 +16,6 @@ import { SourcesResponseInterface, ArticleInterface, ArticlesResponseInterface }
 export class DataService {
   private currentSource: BehaviorSubject<string> = new BehaviorSubject('The News App');
   public currentSource$: Observable<string> = this.currentSource.asObservable();
-  public articles = ARTICLES;
-  public sources = SOURCES;
 
   private currentArticle: BehaviorSubject<ArticleInterface> = new BehaviorSubject<ArticleInterface>({});
   public currentArticle$: Observable<ArticleInterface> = this.currentArticle.asObservable();

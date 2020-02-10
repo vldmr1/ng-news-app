@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Observable } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   public currentSource$: Observable<string>;
 
   constructor(
@@ -15,8 +15,4 @@ export class HeaderComponent implements OnInit {
   ) {
     this.currentSource$ = this.dataService.currentSource$;
    }
-
-  ngOnInit() {
-  }
-
 }

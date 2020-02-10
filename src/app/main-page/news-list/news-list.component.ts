@@ -16,7 +16,6 @@ export class NewsListComponent implements OnInit {
   }
 
   onLoadMoreClick() {
-    console.log(this.articles);
     this.loadMore.emit({});
   }
 

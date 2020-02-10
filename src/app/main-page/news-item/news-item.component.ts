@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./news-item.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewsItemComponent implements OnInit, OnDestroy {
+export class NewsItemComponent implements OnDestroy {
   @Input() article: any;
   @Input() articleIndex: number;
   public deleteArticleSubscription: Subscription;
@@ -19,17 +19,13 @@ export class NewsItemComponent implements OnInit, OnDestroy {
     private dataService: DataService,
   ) { }
 
-  ngOnInit() {
-
-  }
-
   ngOnDestroy() {
-    // this.deleteArticleSubscription.unsubscribe();
+    this.deleteArticleSubscription.unsubscribe();
   }
 
-  handleArticleSelection(article) {
+  handleArticleSelection() {
     this.navigateToArticle();
-    this.dataService.setCurrentArticle(article);
+    this.dataService.setCurrentArticle(this.article);
   }
 
   navigateToArticle() {
@@ -40,13 +36,13 @@ export class NewsItemComponent implements OnInit, OnDestroy {
     this.router.navigate([`/edit`]);
   }
 
-  onSetCurrentArticle(article) {
-    console.log(article);
-    this.dataService.setCurrentArticle(article);
+  onSetCurrentArticle() {
+    // console.log(article);
+    this.dataService.setCurrentArticle(this.article);
     this.navigateToEditPage();
   }
 
-  onDeleteArticle(id) {
-    this.deleteArticleSubscription = this.dataService.deleteLocalArticle(id).subscribe();
+  onDeleteArticle() {
+    this.deleteArticleSubscription = this.dataService.deleteLocalArticle(this.article._id).subscribe();
   }
 }
