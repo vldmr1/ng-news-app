@@ -1,5 +1,3 @@
-import * as jasmine from "jasmine-core";
-
 export function createSpy<T>(
   prototypeOrMethods: T | Array<keyof T>,
   params?: { [prop in keyof T]?: T[prop] }
