@@ -1,0 +1,28 @@
+.app-wrapper {
+  max-width: 108rem;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-areas: "header"
+                       "main"
+                       "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: 10rem 1fr 7rem;
+
+  .app-header {
+    grid-area: header;
+    background-color: lightgreen;
+  }
+
+  .app-main {
+    grid-area: main;
+    background-color: lightskyblue;
+  }
+
+  .app-footer {
+    grid-area: footer;
+    background-color: lightsalmon;
+  }
+}
+

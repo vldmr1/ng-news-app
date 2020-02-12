@@ -1,0 +1,27 @@
+.header-wrapper {
+  padding: 1rem 2rem;
+
+  .app-nav {
+    display: flex;
+    justify-content: flex-end;
+    height: 4rem;
+    margin-left: auto;
+    padding: 0 0.5rem;
+
+    .login-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 18rem;
+    }
+  }
+
+  .title-wrapper {
+    text-align: center;
+
+    .title {
+      display: inline-block;
+    }
+  }
+}
+
+

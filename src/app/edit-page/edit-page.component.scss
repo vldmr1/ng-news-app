@@ -1,0 +1,42 @@
+.form-wrapper {
+  display: grid;
+  grid-template-areas: "ctn meta"
+                       "ctn submit";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 3fr 1fr;
+  grid-gap: 2rem;
+  padding: 7rem 3rem;
+
+  .validate {
+    margin-bottom: 1.5rem;
+
+    &:focus {
+      border-bottom: 1px solid #d32f2f;
+      box-shadow: 0 1px 0 0 #000;
+    }
+  }
+
+  .content-block {
+    grid-area: ctn;
+
+    .content-text {
+      height: 13rem;
+
+      &:focus {
+        border-bottom: 1px solid #d32f2f;
+        box-shadow: 0 1px 0 0 #000;
+      }
+    }
+  }
+
+  .meta-block {
+    grid-area: meta;
+  }
+
+  .submit-block {
+    grid-area: submit;
+    display: flex;
+    justify-content: space-between;
+    width: 20rem;
+  }
+}

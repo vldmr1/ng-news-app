@@ -1,0 +1,27 @@
+<form class="form-wrapper" [formGroup]="articleForm" *ngIf="article">
+  <div class="content-block">
+    <input formControlName="title" placeholder="Heading" id="heading" type="text" class="validate">
+    <input formControlName="description" placeholder="Description" type="text" class="validate">
+    <div class="input-field">
+      <textarea formControlName="content" placeholder="Content" type="text" class="materialize-textarea content-text"></textarea>
+    </div>
+  </div>
+  <div class="meta-block">
+    <!-- <label>
+      <input type="radio" name="imageOption">
+      <span>Image</span>
+    </label>
+    <label>
+      <input type="radio" name="imageOption">
+      <span>URL</span>
+    </label>
+    <input formControlName="image" placeholder="Image" type="text" class="validate"> -->
+    <input formControlName="date" placeholder="Date" type="text" class="validate">
+    <input formControlName="author" placeholder="Author" type="text" class="validate">
+    <input formControlName="url" placeholder="SourceURL" type="text" class="validate">
+  </div>
+  <div class="submit-block">
+    <button type="submit" class="btn grey darken-2" (click)="submitForm()">Submit</button>
+    <button class="btn grey darken-2" (click)="onCancelForm()">Cancel</button>
+  </div>
+</form>
